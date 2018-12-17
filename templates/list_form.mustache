@@ -1,0 +1,59 @@
+ {{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+  }}
+<div class="efb-wrap-list efb-wrap-list-forms">
+    <div class='efb-list-buttons text-right'>
+        {{#pageactions}}
+            <a class='btn btn-primary efb-form-icon-btn' href='{{url}}'>
+                <i class="fa fa-{{icon}}" aria-hidden="true"></i>{{label}}
+            </a>
+        {{/pageactions}}
+    </div>
+    <hr>
+    <h2>{{heading}}</h2>
+    <table id="efb-forms" class="generaltable display efb-table efb-forms-table">
+        <thead>
+            <tr>
+                {{#headings}}
+                    <th>{{.}}</th>
+                {{/headings}}
+            </tr>
+        </thead>
+    </table>
+    <div class="efb-modal modal fade" role="dialog" aria-hidden="true" id="efb-modal">
+        <div class="modal-wrap" role="wrap">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" id="efb-modal-header">
+                        <button type="button" class="close efb-modal-close" data-dismiss="efb-modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body" id="efb-modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger efb-modal-delete-form" type="button">{{#str}} proceed, local_edwiserform {{/str}}</button>
+                        <button class="btn btn-success efb-modal-upgrade-pro" type="button">{{#str}} efb-setup-btn-upgrade, local_edwiserform {{/str}}</button>
+                        <button class="btn btn-success efb-modal-close efb-modal-delete-close" type="button">{{#str}} cancel, local_edwiserform {{/str}}</button>
+                        <button class="btn btn-danger efb-modal-close efb-modal-upgrade-close" type="button">{{#str}} cancel, local_edwiserform {{/str}}</button>
+                        <button class="btn btn-success efb-modal-close efb-modal-deleted-close" type="button">{{#str}} ok, local_edwiserform {{/str}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
