@@ -128,6 +128,7 @@ class edwiserform {
                 if ($formid) {
                     $page = 'editform';
                 }
+                $css = [new moodle_url($CFG->wwwroot .'/local/edwiserform/style/formedit.css')];
                 break;
             case 'listforms':
                 $PAGE->requires->js_call_amd('local_edwiserform/form_list', 'init');
