@@ -117,13 +117,6 @@ class efb_add_new_form implements renderable, templatable
                 "url"   => "#",
                 "class" => "d-none",
                 "icon"  => "check"
-            ),
-            array(
-                "id"    => "efb-btn-purge-cache",
-                "label" => "Purge",
-                "url"   => "https://192.168.3.181/moodle34/admin/purgecaches.php?confirm=1&sesskey=" .
-                $_SESSION['USER']->sesskey . "&returnurl=%2Flocal%2Fedwiserform%2Fview.php%3Fpage%3Dnewform" . ($this->formid != null ? '%26formid%3D' . $this->formid : ''),
-                "icon" => "trash"
             )
         );
         $navitem      = array(
@@ -224,6 +217,7 @@ class efb_add_new_form implements renderable, templatable
             "tmpl_add_title"  => get_string("efb-setup-additional-title", "local_edwiserform"),
             "msg_upgrade"     => get_string("efb-setup-msg-upgrade", "local_edwiserform"),
             "btn_upgrade"     => get_string("efb-setup-btn-upgrade", "local_edwiserform"),
+            "pro_url"         => PRO_URL
         );
         return (object) $setup;
     }

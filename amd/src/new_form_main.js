@@ -5,7 +5,7 @@
  */
 define(['jquery', 'core/ajax', 'local_edwiserform/efb_form_basic_settings', 'local_edwiserform/formbuilder'], function ($, ajax) {
     return {
-        init: function(sitekey) {
+        init: function(sitekey, prourl) {
             $(document).ready(function (e) {
                 function can_save_form() {
                     var status = check_template() && check_title(false) && !empty_form_definition();
@@ -22,10 +22,32 @@ define(['jquery', 'core/ajax', 'local_edwiserform/efb_form_basic_settings', 'loc
                 let formeoOpts = {
                     container: container,
                     sitekey: sitekey,
-                    prourl: 'https://edwiser.org/edwiser-forms-pricing/',
+                    prourl: prourl,
                     svgSprite: M.cfg.wwwroot + '/local/edwiserform/pix/formeo-sprite.svg',
                     localStorage: false,
                 };
+                var reset_form = function() {
+                    formeo.dom.loading();
+                    var formtype = $("#id_type").val();
+                    var templateRequest = ajax.call([{
+                        methodname: 'edwiserform_get_template',
+                        args: {
+                            name: formtype
+                        }
+                    }]);
+                    templateRequest[0].done(function(response) {
+                        formeo.dom.loadingClose();
+                        if (response.status == true) {
+                            formeoOpts.container = container;
+                            formeo = new Formeo(formeoOpts, response.definition);
+                            return;
+                        }
+                    }).fail(function(ex) {
+                        formeo.dom.loadingClose();
+                        formeo.dom.alert('danger', ex.message);
+                    });
+                };
+                formeoOpts.resetForm = reset_form;
                 if (typeof formdefinition != 'undefined') {
                     formeo = new Formeo(formeoOpts, formdefinition);
                 } else {
@@ -204,10 +226,21 @@ define(['jquery', 'core/ajax', 'local_edwiserform/efb_form_basic_settings', 'loc
                         var form_update_action = function (response) {
                             if (response.status == true) {
                                 window.onbeforeunload = null;
-                                formeo.dom.alert('success', response.msg, function() {
-                                    formeo.reset();
-                                    $(location).attr('href', M.cfg.wwwroot + "/local/edwiserform/view.php?page=listforms");
-                                });
+                                formeo.dom.multiActions(
+                                    'success',
+                                    M.util.get_string("success", "local_edwiserform"),
+                                    response.msg,
+                                    [{
+                                        title: M.util.get_string("efb-heading-listforms", "local_edwiserform"),
+                                        type: 'success',
+                                        action: function() {
+                                            $(location).attr('href', M.cfg.wwwroot + "/local/edwiserform/view.php?page=listforms");
+                                        }
+                                    }, {
+                                        title: M.util.get_string("close", "local_edwiserform"),
+                                        type: 'success'
+                                    }]
+                                );
                             } else {
                                 formeo.dom.alert('danger', response.msg);
                             }
