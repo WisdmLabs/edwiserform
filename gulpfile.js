@@ -8,7 +8,7 @@ const clean = require("gulp-clean");
 const replace = require("gulp-batch-replace");
 const concat = require("gulp-concat");
 
-const moodlepath = '/var/www/html/m36dev1/';
+const moodlepath = '/var/www/html/m37dev1/';
 
 gulp.task('purgeall', function() {
     return gulp.src(moodlepath + 'admin/cli')
