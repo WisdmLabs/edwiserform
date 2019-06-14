@@ -59,11 +59,11 @@ gulp.task('separatestyles', function() {
 });
 
 gulp.task('watch', gulp.series('purgeall', function(done) {
-    gulp.watch('amd/src/*.js', gulp.series('compress', 'purgeall'));
-    gulp.watch('amd/build/form*.js', gulp.series('purgeall'));
+    gulp.watch('amd/src/*.js', gulp.series('compress', 'purgejs'));
+    gulp.watch('amd/build/form*.js', gulp.series('purgejs'));
     gulp.watch('assets/scss/common/*.scss', gulp.series('commonstyles', 'purgeall'));
     gulp.watch('assets/scss/**/*.scss', gulp.series('separatestyles'));
-    gulp.watch('lang/*', gulp.series('purgelang'));
+    gulp.watch('lang/**/*', gulp.series('purgelang'));
     done();
 }));
 
@@ -105,4 +105,4 @@ gulp.task('copydatatablesjs', function() {
     .pipe(gulp.dest('amd/src'));
 });
 gulp.task('copydatatables', gulp.series('cleandatatablesjs', 'copydatatablesjs', 'copydatatablescss'));
-gulp.task('default', gulp.series('copydatatables', 'compress', 'commonstyles', 'separatestyles', 'purgeall', 'watch'));
+gulp.task('default', gulp.series('compress', 'commonstyles', 'separatestyles', 'purgeall', 'watch'));
